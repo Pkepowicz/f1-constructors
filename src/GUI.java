@@ -5,10 +5,11 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.Dataset;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.DefaultValueDataset;
-
+import org.jsoup.Connection.*;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.awt.*;
 
@@ -64,6 +65,8 @@ public class GUI {
         frame.add(control, BorderLayout.CENTER);
         frame.add(chartPanel, BorderLayout.SOUTH);
 
+        GetConstructorData("Red Bull");
+
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -77,5 +80,28 @@ public class GUI {
         int newWidth = (int)(0.4999+iconToScale.getIconWidth()/mod);
         ImageIcon image = new ImageIcon(iconToScale.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH));
         return image;
+    }
+
+    private static Constructor GetConstructorData(String name) {
+        log.debug("Start downloading for: " + name);
+        String standingPrefix = "https://www.formula1.com/en/results.html/";
+        for (int i = 2022; i <= 2022; i++) {
+            Document r = null;
+            try {
+                r = Jsoup.connect(standingPrefix + Integer.toString(i) + "/team.html").get();
+                Element tmp = r.select("table[class=resultsarchive-table]").first();
+                for (Element e : tmp.select("tr")) {
+                    if (!e.select("td:eq(2)").text().contains(name)) {
+                        continue;
+                    }
+                    System.out.println(e.select("td:eq(1)").text()); // position
+                    System.out.println(e.select("td:eq(2)").text()); // full name
+                    System.out.println(e.select("td:eq(3)").text()); // points
+                }
+            } catch (Exception e) {
+                log.error(e);
+            }
+        }
+        return new Constructor();
     }
 }
