@@ -41,4 +41,12 @@ public class Constructor {
     public void setLogo(ImageIcon logo) {
         this.logo = logo;
     }
+
+    @Override
+    public String toString() {
+        return "Constructor{" +
+                "name='" + name + '\'' +
+                ", standings=" + standings +
+                '}';
+    }
 }

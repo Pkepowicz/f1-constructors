@@ -1,28 +1,25 @@
 public class Standing implements Comparable<Standing> {
-    private int year;
-    private int score;
-    private int position;
+    public int year;
+    public float score;
+    public int position;
 
-    public void Standing(int _year, int _score, int _position) {
-        this.year = _year;
-        this.score = _score;
-        this.position = _position;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public int getScore() {
-        return score;
-    }
-
-    public int getPosition() {
-        return position;
+    public Standing(int year, float score, int position) {
+        this.year = year;
+        this.score = score;
+        this.position = position;
     }
 
     @Override
     public int compareTo(Standing s) {
         return(year - s.year);
+    }
+
+    @Override
+    public String toString() {
+        return "Standing{" +
+                "year=" + year +
+                ", score=" + score +
+                ", position=" + position +
+                '}';
     }
 }
