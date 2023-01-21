@@ -11,7 +11,7 @@ public class Standing implements Comparable<Standing> {
 
     @Override
     public int compareTo(Standing s) {
-        return(year - s.year);
+        return(s.year - year);
     }
 
     @Override
